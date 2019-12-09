@@ -1,0 +1,9 @@
+{
+    "MySQL": {
+        "username": "pn1yme2p_kartsng",
+        "password": "kartsngo2019",
+        "database": "pn1yme2p_kartsngo",
+        "host": "lhcp1059.webapps.net",
+        "dialect": "mysql"
+    }
+}
