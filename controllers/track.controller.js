@@ -1,13 +1,13 @@
 const saltRounds = 10;
 const connect = require('../config/connectMySQL');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 function read(req, res) {
-    
+
     connect.con.query('SELECT * from track',
         function (err, rows, fields) {
             if (!err) {
-                
+
                 if (rows.length == 0) {
                     res.status(404).send("Data not found");
                 } else {
@@ -18,7 +18,7 @@ function read(req, res) {
 }
 
 function readID(req, res) {
- 
+
     const idTrack = req.sanitize('id').escape();
     const post = {
         idTrack: idTrack
@@ -26,7 +26,7 @@ function readID(req, res) {
     connect.con.query('SELECT * from track where idTrack = ? order by distance desc', post,
         function (err, rows, fields) {
             if (!err) {
-                
+
                 if (rows.length == 0) {
                     res.status(404).send({
                         "msg": "data not found"
@@ -43,28 +43,28 @@ function readID(req, res) {
 }
 
 function save(req, res) {
-    
-    
+
+
     const track_name = req.sanitize('track_name').escape();
     const distance = req.sanitize('distance').escape();
     const idTracktype_fk = req.sanitize('idTracktype_fk').escape();
 	const idScheduleTrack_fk = req.sanitize('idScheduleTrack_fk').escape();
     const idActivity_fk = req.sanitize('idActivity_fk').escape();
     const idEspacoT_fk = req.sanitize('idEspacoT_fk').escape();
-	
-	
+
+
 	 const errors = req.validationErrors();
-	 
+
 	 if (errors) {
         res.send(errors);
         return;
     }
     else {
-        if (track_name != "NULL" && distance != "NULL" && idTracktype_fk != 'NULL' && idScheduleTrack_fk != "NULL" && 
+        if (track_name != "NULL" && distance != "NULL" && idTracktype_fk != 'NULL' && idScheduleTrack_fk != "NULL" &&
         idActivity_fk != "NULL" && idEspacoT_fk != "NULL") {
-          
+
 		   const post = {
-            
+
             track_name : track_name,
             distance : distance,
             idTracktype_fk : idTracktype_fk,
@@ -72,7 +72,7 @@ function save(req, res) {
             idActivity_fk : idActivity_fk,
             idEspacoT_fk : idEspacoT_fk,
         };
-        
+
         const query = connect.con.query('INSERT INTO track SET ?', post, function (err, rows, fields) {
             console.log(query.sql);
             if (!err) {
@@ -92,12 +92,12 @@ function save(req, res) {
 }
 
 function readAll(req, res) {
-    
-    connect.con.query('SELECT * FROM track a, type_track b, schedule_track c, activity d, space e WHERE a.idTracktype_fk = b.idtype_track AND a.idScheduleTrack_fk = c.idschedule_track AND a.idActivity_fk = d.id_Atividade AND a.idEspacoT_fk = e.id_espaco', 
+
+    connect.con.query('SELECT * FROM track a, type_track b, schedule_track c, activity d, space e WHERE a.idTracktype_fk = b.idtype_track AND a.idScheduleTrack_fk = c.idschedule_track AND a.idActivity_fk = d.id_Atividade AND a.idEspacoT_fk = e.id_espaco',
 
     function (err, rows, fields) {
         if (!err) {
-            
+
             if (rows.length == 0) {
                 res.status(404).send("Data not found");
             } else {
@@ -118,7 +118,7 @@ function readAll(req, res) {
 	const track_type_id_tipo_pista1 = req.sanitize('track_type_id_tipo_pista1').escape();
 	const distance = req.sanitize('distance').escape();
 	const id_horario_pista = req.sanitize('id_horario_pista').escape();
-	
+
         var update = {
             id_espaco,
 			nametrack,

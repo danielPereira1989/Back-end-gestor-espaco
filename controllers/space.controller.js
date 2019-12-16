@@ -1,7 +1,7 @@
 //definiçaoconstantes
 const saltRounds = 10;
 const connect = require('../config/connectMySQL');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 function read(req, res) {
     //criar e executar a query de leitura na BD
@@ -46,23 +46,23 @@ function readID(req, res) {
 function save(req, res) {
     //receber os dados do formuário que são enviados por post
     const id_espaco = req.sanitize('id_espaco').escape();
-    
+
     const localidade = req.sanitize('localidade').escape();
     const morada = req.sanitize('morada').escape();
     const coordenadas_gps = req.sanitize('coordenadas_gps').escape();
     const receita_monetaria_espaco = req.sanitize('receita_monetaria_espaco').escape();
-    
 
-     
+
+
     const query = "";
         const post = {
             id_espaco : id_espaco,
-           
+
             localidade : localidade,
             morada : morada,
             coordenadas_gps : coordenadas_gps,
             receita_monetaria_espaco : receita_monetaria_espaco,
-            
+
         };
         console.log("with hash:" + hash);
         query = connect.con.query('INSERT INTO space SET ?', post, function (err, rows, fields) {
@@ -85,15 +85,15 @@ function save(req, res) {
 function update(req, res) {
     //receber os dados do formuário que são enviados por post
     const id_espaco = req.sanitize('id_espaco').escape();
-   
+
     const localidade = req.sanitize('localidade').escape();
     const morada = req.sanitize('morada').escape();
     const coordenadas_gps = req.sanitize('coordenadas_gps').escape();
     const receita_monetaria_espaco = req.sanitize('receita_monetaria_espaco').escape();
     //console.log("without hahsh:" + req.body.pass);
-    
+
         var update = {
-            
+
             localidade,
             morada,
             coordenadas_gps,
@@ -143,5 +143,5 @@ module.exports = {
     save: save,
     //update: update,
     //deleteID: deleteID,
-    
+
 };

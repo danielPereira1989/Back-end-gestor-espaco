@@ -1,7 +1,7 @@
 //definiçãode constantes
 const saltRounds = 10;
 const connect = require('../config/connectMySQL');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 function read(req, res) {
     //criar e executar a query de leitura na BD
@@ -62,7 +62,7 @@ function save(req, res) {
             descricao : descricao,
             quantidade : quantidade,
             idEspaco_fk :idEspaco_fk,
-           
+
         };
        // console.log("with hash:" + hash);
        const query = connect.con.query('INSERT INTO materials SET ?', post, function (err, rows, fields) {
