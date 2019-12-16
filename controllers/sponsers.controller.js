@@ -2,85 +2,6 @@ const connect = require('../config/connectMySQL');
 const jsonMessagesPath = __dirname + "/../assets/jsonMessages/";
 const jsonMessages = require(jsonMessagesPath + "bd");
 
-             function save(req, res) {
-                  //receber os dados do formuário de registo de patrocinador e patrocinio que são enviados por post
-
-                  const nome_patrocinador = req.sanitize('nome_patrocinador').escape();
-                  const NIF = req.sanitize('NIF').escape();
-                  const Morada = req.sanitize('Morada').escape();
-                  const Contacto = req.sanitize('Contacto').escape();
-                  const pessoa_contacto = req.sanitize('pessoa_contacto').escape();
-                  const preco_patrocinio = req.sanitize('preco_patrocinio').escape();
-                  const tipo_patrocinio = req.sanitize('tipo_patrocinio').escape();
-                  const txtNotas = req.sanitize('txtNotas').escape();
-                  const validade_patrocinio = req.sanitize('validade_patrocinio').escape();
-
-    
-                  req.checkBody("nome_patrocinador", "nsira apenas texto").matches(/^[a-z ]+$/i)
-                  req.checkBody("NIF", "Insira um NIF válido").isNumeric();
-                  req.checkBody("Morada", "Insira apenas texto").matches(/^[a-z ]+$/i);
-                  req.checkBody("Contacto", "Insira um contacto válido").isNumeric();
-                  req.checkBody("pessoa_contacto", "Insira um cotacto valido, do representante do patrocinador").isNumeric();
-                  req.checkBody("preco_patrocinio", "Insira um montante válido").isNumeric();
-                  req.checkBody("tipo_patrocinio", "Insira um tipo de patrocinio válido").matches(/^[a-z ]+$/i);
-                  req.checkBody("txtNotas", "Insira apenas texto").matches(/^[a-z ]+$/i);
-
-                  const errors = req.validationErrors();
-
-                  if(errors){
-                    console.log(errors);
-                      res.send(errors);
-                      return;
-                    }
-                     else{
-                         const postSponser = {
-                         //Objeto1
-                         nome_patrocinador: nome_patrocinador, 
-                         //aprovacao: aprovacao, 
-                         NIF: NIF,
-                         Morada: Morada,
-                         Contacto: Contacto,
-                         pessoa_contacto: pessoa_contacto,
-                        };
-console.log("ate aqui funciona");
-                        let queryGuardarSponser = '';
-                        let queryGuardarSponsership = '';
-
-                        queryGuardarSponser = connect.con.query('INSERT INTO sponser SET ?', postSponser, function(err, rows, fields){
-                            console.log(queryGuardarSponser.sql);
-                            const id = rows.insertId;
-        
-                            const postSposershipObjetoID = {
-                            //objeto2
-                            id_patrocinador : id,
-                            preco_patrocinio : preco_patrocinio,
-                            tipo_patrocinio : tipo_patrocinio,
-                            txtNotas : txtNotas,
-                            validade_patrocinio : validade_patrocinio,
-                        }
-                        if(!err){
-                            queryGuardarSponsership = connect.con.query('INSERT INTO space_sponsership SET ?', postSposershipObjetoID, function(err, rows, fields){
-                            console.log(queryGuardarSponsership.sql);
-                            if(!err){
-                                console.log('Patrocinio registado com sucesso!');
-                                res.send(jsonMessages.db.successInsert);
-                            }
-                            else {
-                                console.log(err);
-                                res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
-                                res.send(jsonMessages.bd.dbError);
-                            }
-                        });
-                    }
-                    else{
-                        console.log(err);
-                        res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
-                        res.send(jsonMessages.bd.dbError);
-                    }})};
-              };
-
-
-
 
 function read(req, res) {
     //criar e executar a query de leitura na BD
@@ -120,7 +41,142 @@ function readID(req, res) {
                 });
         }
     );
-};
+}
+
+
+function save1(req, res) {
+    //receber os dados do formuário que são enviados por post
+    //const id_patrocinador = req.sanitize('id_patrocinador').escape();
+    const nome_patrocinador = req.sanitize('nome_patrocinador').escape();
+    const NIF = req.sanitize('NIF').escape();
+    const Morada = req.sanitize('Morada').escape();
+    const Contacto = req.sanitize('Contacto').escape();
+    const pessoa_contacto = req.sanitize('pessoa_contacto').escape();
+
+    //fazer validações !!!!!!!!!!!!!!!!!  ver
+
+    const errors = req.validationErrors();
+    
+    if (errors) {
+        res.send(errors);
+        return;
+    }
+    else {
+        if (nome_patrocinador != "NULL" && typeof(nome_patrocinador) != 'undefined' && NIF != "NULL" && 
+        Morada != "NULL" && Contacto != "NULL" && pessoa_contacto != "NULL" ) {
+            const post = { 
+                nome_patrocinador: nome_patrocinador, 
+                //aprovacao: aprovacao, 
+                NIF: NIF,
+                Morada: Morada,
+                Contacto: Contacto,
+                pessoa_contacto: pessoa_contacto,
+                
+            };
+            //criar e executar a query de gravação na BD para inserir os dados presentes no post
+            const query = connect.con.query('INSERT INTO sponser SET ?', post, function(err, rows, fields) {
+                console.log(query.sql);
+                if (!err) {
+                    res.status(jsonMessages.db.successInsert.status).location(rows.insertId).send(jsonMessages.db.successInsert);
+                }
+                else {
+                    console.log(err);
+                    res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+                }
+            });
+        }
+        else
+            res.status(jsonMessages.db.requiredData.status).send(jsonMessages.db.requiredData);
+    }
+}
+
+//funcao save patrocinio
+function save(req, res) {
+
+    //receber os dados do formuário de registo de patrocinador e patrocinio que são enviados por post
+
+    //const id_patrocinador = req.sanitize('id_patrocinador').escape();
+    const nome_patrocinador = req.sanitize('nome_patrocinador').escape();
+    const NIF = req.sanitize('NIF').escape();
+    //const Morada = req.sanitize('Morada').escape();
+    const Contacto = req.sanitize('Contacto').escape();
+    //const pessoa_contacto = req.sanitize('pessoa_contacto').escape();
+    const preco_patrocinio = req.sanitize('preco_patrocinio');
+    const tipo_patrocinio = req.sanitize('tipo_patrocinio');
+    const txtNotas = req.sanitize('txtNotas');
+
+    
+    req.checkBody("nome_patrocinador", "nsira apenas texto").matches(/^[a-z ]+$/i)
+    req.checkBody("NIF", "Insira um NIF válido").isNumeric();
+    //req.checkBody("Morada", "Insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody("Contacto", "Insira um contacto válido").isNumeric();
+    //req.checkBody("pessoa_contacto", "Insira um cotacto valido, do representante do patrocinador").isNumeric();
+    req.checkBody("preco_patrocinio", "Insira um montante válido").isNumeric();
+    req.checkBody("tipo_patrocinio", "Insira um tipo de patrocinio válido").matches(/^[a-z ]+$/i);
+    req.checkBody("txtNotas", "Insira apenas texto").matches(/^[a-z ]+$/i);
+
+
+    const errors = req.validationErrors();
+
+    if(errors){
+        res.send(errors);
+        return;
+    }
+    else{
+        if(nome_patrocinador != null && NIF != null&& preco_patrocinio != null && txtNotas != null){
+                
+                const postSponser = {
+                    nome_patrocinador: nome_patrocinador, 
+                    //aprovacao: aprovacao, 
+                    NIF: NIF,
+                    //Morada: Morada,
+                    Contacto: Contacto,
+                    //pessoa_contacto: pessoa_contacto,
+                };
+
+                const postSponsership = {
+                    preco_patrocinio : preco_patrocinio,
+                    tipo_patrocinio : tipo_patrocinio,
+                    txtNotas : txtNotas,
+
+                }
+
+                let queryGuardarSponser = '';
+                let queryGuardarSponsership = '';
+
+                queryGuardarSponser = connect.con.query('INSERT INTO sponser SET ?', postSponser, function(err, rows, fields){
+                    res.status(jsonMessages.bd.successInsert.status).location(rows.insertId).send(jsonMessages.db.successInsert);
+                    console.log(queryGuardarSponser.sql);
+                    const id = rows.insertId;
+
+                    const objetoID = {
+                        id : id,
+                        preco_patrocinio : preco_patrocinio,
+                        tipo_patrocinio : tipo_patrocinio,
+                        txtNotas : txtNotas,
+                    }
+
+                    if(!err){
+                        queryGuardarSponsership = connect.con.query('INSERT INTO space_sponsership SET ?', objetoID, function(err, rows, fields){
+                            console.log(queryGuardarSponsership.sql);
+
+                            if(!err){
+                                res.status(jsonMessages.bd.successInsert.status).location(rows.insertId).send(jsonMessages.db.successInsert);
+                                console.log('Patrocinio registado com sucesso!');
+                            }
+                        });
+                    }
+                    else{
+                        console.log(err);
+                        res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+                    }
+                });
+            }
+            else{
+                res.status(jsonMessages.db.requiredData.status).send(jsonMessages.db.requiredData);
+            }
+    }
+}
 
 
 

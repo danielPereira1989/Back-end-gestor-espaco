@@ -6,7 +6,7 @@ var bcrypt = require('bcrypt');
 function read(req, res) {
     //criar e executar a query de leitura na BD
     //const id_material = req.sanitize('id').escape();   //exportaras funções
-   const query = connect.con.query('SELECT id_material, nome_material, quantidade, descricao from materials',
+   const query = connect.con.query('SELECT * from materials',
         function (err, rows, fields) {
 
             console.log(query.sql);
@@ -27,7 +27,7 @@ function readID(req, res) {
     const post = {
         id_material: id_material
     };
-    const query = connect.con.query('SELECT  nome_material, quantidade, descricao from materials where id_material = ?', post,
+    const query = connect.con.query('SELECT * from materials where id_material = ?', post,
         function (err, rows, fields) {
 
             console.log(query.sql);
@@ -54,14 +54,15 @@ function save(req, res) {
     const nome_material = req.sanitize('nome_material').escape();
     const quantidade = req.sanitize('quantidade').escape();
     const descricao = req.sanitize('descricao').escape();
-    const id_espaco = req.sanitize('id_espaco').escape();
+    const idEspaco_fk = req.sanitize('idEspaco_fk').escape();
 
         const post = {
             id_material : id_material,
             nome_material : nome_material,
             descricao : descricao,
             quantidade : quantidade,
-            id_espaco : id_espaco
+            idEspaco_fk :idEspaco_fk,
+           
         };
        // console.log("with hash:" + hash);
        const query = connect.con.query('INSERT INTO materials SET ?', post, function (err, rows, fields) {
@@ -81,7 +82,7 @@ function save(req, res) {
         });
     }
 
-function update(req, res) {
+/*function update(req, res) {
     //receber os dados do formuário que são enviados por post
     const nome_material = req.sanitize('nome_material').escape();
     const quantidade = req.sanitize('quantidade').escape();
@@ -93,7 +94,8 @@ function update(req, res) {
             nome_material : nome_material,
             descricao : descricao,
             quantidade : quantidade,
-            id_material : id_material
+            id_material : id_material,
+            idEspaco_fk : idEspaco_fk,
         };
        const query = connect.con.query('INSERT INTO materials SET nome_material = ?, descricao=?, quantidade=? where id_material=?', update, function (err, rows,
             fields) {
@@ -133,11 +135,11 @@ function deleteID(req, res) {
             console.log('Error while performing Query.', err);
     });
 }
-
+*/
 module.exports = {
     read: read,
     readID: readID,
     save: save,
-    update: update,
-    deleteID: deleteID
+    //update: update,
+    //deleteID: deleteID
 };

@@ -1,15 +1,13 @@
-/*
-//definiçãode constantes
 const saltRounds = 10;
 const connect = require('../config/connectMySQL');
 var bcrypt = require('bcrypt');
 
 function read(req, res) {
-    //criar e executar a query de leitura na BD
-    const query = connect.con.query('SELECT idtrack, nametrack, distance from track order by distance desc',
+    
+    connect.con.query('SELECT * from track',
         function (err, rows, fields) {
             if (!err) {
-                //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados (rows).
+                
                 if (rows.length == 0) {
                     res.status(404).send("Data not found");
                 } else {
@@ -20,14 +18,15 @@ function read(req, res) {
 }
 
 function readID(req, res) {
-    let query = "";
-    //criar e executar a query de leitura na BD
-    const idtrack = req.sanitize('idtrack').escape();
-    const post = { idtrack: idtrack };
-    query = connect.con.query('SELECT idtrack, nametrack, distance from track where idtrack = ? order by distance desc', post,
+ 
+    const idTrack = req.sanitize('id').escape();
+    const post = {
+        idTrack: idTrack
+    };
+    connect.con.query('SELECT * from track where idTrack = ? order by distance desc', post,
         function (err, rows, fields) {
             if (!err) {
-                //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados(rows).
+                
                 if (rows.length == 0) {
                     res.status(404).send({
                         "msg": "data not found"
@@ -44,19 +43,37 @@ function readID(req, res) {
 }
 
 function save(req, res) {
-    //receber os dados do formuário que são enviados por post
-    const idtrack = req.sanitize('idtrack').escape();
-    const nametrack = req.sanitize('nametrack').escape();
-    const distance = req.sanitize('distance').escape();
     
-    let query = "";
-        const post = {
-            idtrack: idtrack,
-            nametrack: nametrack,
-            distance: distance
+    
+    const track_name = req.sanitize('track_name').escape();
+    const distance = req.sanitize('distance').escape();
+    const idTracktype_fk = req.sanitize('idTracktype_fk').escape();
+	const idScheduleTrack_fk = req.sanitize('idScheduleTrack_fk').escape();
+    const idActivity_fk = req.sanitize('idActivity_fk').escape();
+    const idEspacoT_fk = req.sanitize('idEspacoT_fk').escape();
+	
+	
+	 const errors = req.validationErrors();
+	 
+	 if (errors) {
+        res.send(errors);
+        return;
+    }
+    else {
+        if (track_name != "NULL" && distance != "NULL" && idTracktype_fk != 'NULL' && idScheduleTrack_fk != "NULL" && 
+        idActivity_fk != "NULL" && idEspacoT_fk != "NULL") {
+          
+		   const post = {
+            
+            track_name : track_name,
+            distance : distance,
+            idTracktype_fk : idTracktype_fk,
+            idScheduleTrack_fk : idScheduleTrack_fk,
+            idActivity_fk : idActivity_fk,
+            idEspacoT_fk : idEspacoT_fk,
         };
-        console.log("with hash:" + hash);
-        query = connect.con.query('INSERT INTO track SET ?', post, function (err, rows, fields) {
+        
+        const query = connect.con.query('INSERT INTO track SET ?', post, function (err, rows, fields) {
             console.log(query.sql);
             if (!err) {
                 res.status(200).location(rows.insertId).send({
@@ -71,23 +88,49 @@ function save(req, res) {
             }
         });
     };
+	}
+}
 
+function readAll(req, res) {
+    
+    connect.con.query('SELECT * FROM track a, type_track b, schedule_track c, activity d, space e WHERE a.idTracktype_fk = b.idtype_track AND a.idScheduleTrack_fk = c.idschedule_track AND a.idActivity_fk = d.id_Atividade AND a.idEspacoT_fk = e.id_espaco', 
 
-function update(req, res) {
+    function (err, rows, fields) {
+        if (!err) {
+            
+            if (rows.length == 0) {
+                res.status(404).send("Data not found");
+            } else {
+                res.status(200).send(rows);
+            }
+        } else console.log('Error while performing Query.', err);
+    });
+}
+
+/*function update(req, res) {
     //receber os dados do formuário que são enviados por post
-    const idtrack = req.sanitize('idtrack').escape();
+    //const id_espaco = req.sanitize('id_espaco').escape();
     const nametrack = req.sanitize('nametrack').escape();
-    const distance = req.sanitize('distance').escape();
-    console.log("without hahsh:" + req.body.pass);
-    var query = "";
-    bcrypt.hash(password, saltRounds).then(function (hash) {
-        console.log("with hash:" + hash);
+    const id_tipo_pista = req.sanitize('id_tipo_pista').escape();
+    const espacos_id_espaco = req.sanitize('id').escape();
+    const espacos_gestor_espaco_id_gestor_espaco = req.sanitize('espacos_gestor_espaco_id_gestor_espaco').escape();
+    const track_type_id_tipo_pista = req.sanitize('track_type_id_tipo_pista').escape();
+	const track_type_id_tipo_pista1 = req.sanitize('track_type_id_tipo_pista1').escape();
+	const distance = req.sanitize('distance').escape();
+	const id_horario_pista = req.sanitize('id_horario_pista').escape();
+	
         var update = {
-            idtrack,
-            nametrack,
-            distance
+            id_espaco,
+			nametrack,
+			id_tipo_pista,
+			espacos_id_espaco,
+			espacos_gestor_espaco_id_gestor_espaco,
+			track_type_id_tipo_pista,
+			track_type_id_tipo_pista1,
+			distance,
+			id_horario_pista,
         };
-        const query = connect.con.query('INSERT INTO track SET nametrack = ?, distance =? where idtrack=?', update, function (err, rows,
+        query = connect.con.query('INSERT INTO track SET id_espaco, nametrack, id_tipo_pista, espacos_id_espaco, espacos_gestor_espaco_id_gestor_espaco, track_type_id_tipo_pista, track_type_id_tipo_pista1, distance, id_horario_pista', update, function (err, rows,
             fields) {
 
             console.log(query.sql);
@@ -99,44 +142,37 @@ function update(req, res) {
                 console.log('Error while performing Query.', err);
             }
         });
-    });
-}
+    }
 
-//delete lógico
-function deleteL(req, res) {
-    const update = [0, req.sanitize('idtrack').escape()];
-    const query = connect.con.query('UPDATE track SET active = ? WHERE idtrack =?', update, function(err, rows, fields) {
-        console.log(query.sql);
-        if (!err) {
-            res.status(jsonMessages.db.successDelete.status).send(jsonMessages.db.successDelete);
-        }
-        else {
-            console.log(err);
-            res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
-        }
-    });
-}
 
-//delete físico
-function deleteF(req, res) {
-    const update = req.sanitize('idtrack').escape();
-    const query = connect.con.query('DELETE FROM track WHERE idtrack=?', update, function(err, rows, fields) {
-        console.log(query.sql);
+function deleteID(req, res) {
+    //criar e executar a query de leitura na BD
+    const iduser = req.sanitize('id').escape();
+    const post = {
+        idUser: iduser
+    };
+    connect.con.query('DELETE from users where idtrack = ?', post, function (err, rows, fields) {
         if (!err) {
-            res.status(jsonMessages.db.successDeleteU.status).send(jsonMessages.db.successDeleteU);
-        }
-        else {
-            console.log(err);
-            res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
-        }
+            //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados(rows).
+            if (rows.length == 0) {
+                res.status(404).send({
+                    "msg": "data not found"
+                });
+            } else {
+                res.status(200).send({
+                    "msg": "success"
+                });
+            }
+        } else
+            console.log('Error while performing Query.', err);
     });
 }
+*/
 module.exports = {
     read: read,
     readID: readID,
     save: save,
-    update: update,
-    deleteL: deleteL,
-    deleteF: deleteF
+    readAll : readAll,
+    //update: update,
+    //deleteID: deleteID
 };
-*/

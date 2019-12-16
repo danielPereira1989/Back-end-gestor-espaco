@@ -6,7 +6,7 @@ var bcrypt = require('bcrypt');
 function read(req, res) {
     //criar e executar a query de leitura na BD
     // const iduser = req.sanitize('id').escape();//colocaras quatrofunções(...)//exportaras funções
-    connect.con.query('SELECT id_espaco, id_gestor_espaco, localidade, morada, coordenadas_gps, receita_monetaria_espaco from space',
+    connect.con.query('SELECT * from space',
         function (err, rows, fields) {
             if (!err) {
                 //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados (rows).
@@ -25,7 +25,7 @@ function readID(req, res) {
     const post = {
         id_espaco: id_espaco
     };
-    connect.con.query('SELECT id_espaco, id_gestor_espaco, localidade, morada, coordenadas_gps, receita_monetaria_espaco from space where id_espaco = ?', post,
+    connect.con.query('SELECT * from space where id_espaco = ?', post,
         function (err, rows, fields) {
             if (!err) {
                 //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados(rows).
@@ -46,20 +46,23 @@ function readID(req, res) {
 function save(req, res) {
     //receber os dados do formuário que são enviados por post
     const id_espaco = req.sanitize('id_espaco').escape();
-    const id_gestor_espaco = req.sanitize('id_gestor_espaco').escape();
+    
     const localidade = req.sanitize('localidade').escape();
     const morada = req.sanitize('morada').escape();
     const coordenadas_gps = req.sanitize('coordenadas_gps').escape();
     const receita_monetaria_espaco = req.sanitize('receita_monetaria_espaco').escape();
+    
+
      
     const query = "";
         const post = {
             id_espaco : id_espaco,
-            id_gestor_espaco : id_gestor_espaco,
+           
             localidade : localidade,
             morada : morada,
             coordenadas_gps : coordenadas_gps,
             receita_monetaria_espaco : receita_monetaria_espaco,
+            
         };
         console.log("with hash:" + hash);
         query = connect.con.query('INSERT INTO space SET ?', post, function (err, rows, fields) {
@@ -78,11 +81,11 @@ function save(req, res) {
         });
     };
 
-
+/*
 function update(req, res) {
     //receber os dados do formuário que são enviados por post
     const id_espaco = req.sanitize('id_espaco').escape();
-    const id_gestor_espaco = req.sanitize('id_gestor_espaco').escape();
+   
     const localidade = req.sanitize('localidade').escape();
     const morada = req.sanitize('morada').escape();
     const coordenadas_gps = req.sanitize('coordenadas_gps').escape();
@@ -90,7 +93,7 @@ function update(req, res) {
     //console.log("without hahsh:" + req.body.pass);
     
         var update = {
-            id_gestor_espaco,
+            
             localidade,
             morada,
             coordenadas_gps,
@@ -113,45 +116,23 @@ function update(req, res) {
     };
 
 
-function deleteID(req, res) {
-    //criar e executar a query de leitura na BD
-    const id_espaco = req.sanitize('id').escape();
-    const post = {
-        id_espaco: id_espaco
-    };
-    const query = connect.con.query('DELETE from space where id_espaco = ?', post, function (err, rows, fields) {
-        console.log(query.sql);
-        if (!err) {
-            //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados(rows).
-            if (rows.length == 0) {
-                res.status(404).send({
-                    "msg": "data not found"
-                });
-            } else {
-                res.status(200).send({
-                    "msg": "success"
-                });
+    function deleteID(req, res) {
+        const update = req.sanitize('id').escape();
+        const query = connect.con.query('DELETE FROM sponsor WHERE id_espaco = ?', update, function(err, rows, fields) {
+            console.log(query.sql);
+            if (!err) {
+                res.status(jsonMessages.db.successDeleteU.status).send(jsonMessages.db.successDeleteU);
             }
-        } else
-            console.log('Error while performing Query.', err);
-    });
-}
+            else {
+                console.log(err);
+                res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+            }
+        });
+    }
 
-function readSpaceSponser(req, res) {
-  const id_espaco = req.sanitize('id').escape();
-    const post = {  id_espaco: id_espaco  };
-    const query = connect.con.query('SELECT distinct sponser.id_patrocionador, nome_patrocionador, NIF, Morada, Contacto, pessoa_contacto active FROM sponser, space_sponsership where ? order by id_patrocionador desc', post,
-    function (err, rows, fields) {
-           if (!err) {
-               //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados (rows).
-               if (rows.length == 0) {
-                   res.status(404).send("Data not found");
-               } else {
-                   res.status(200).send(rows);
-               }
-           } else console.log('Error while performing Query.', err);
-       });
-}
+
+*/
+
 
 
 
@@ -160,7 +141,7 @@ module.exports = {
     read: read,
     readID: readID,
     save: save,
-    update: update,
-    deleteID: deleteID,
-    readSpaceSponser: readSpaceSponser
+    //update: update,
+    //deleteID: deleteID,
+    
 };
