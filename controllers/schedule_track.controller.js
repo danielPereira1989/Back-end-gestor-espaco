@@ -1,10 +1,11 @@
 const saltRounds = 10;
 const connect = require('../config/connectMySQL');
 var bcrypt = require('bcryptjs');
+const jsonMessages = require('../assets/jsonMessages/bd');
 
 function read(req, res) {
 
-    connect.con.query('SELECT * from schedule_track',
+    connect.con.query('SELECT * from schedule_track where active = 1',
         function (err, rows, fields) {
             if (!err) {
 
@@ -18,38 +19,34 @@ function read(req, res) {
 }
 
 
-function readID(req, res) {
-
+function readID (req, res) {
     const idschedule_track = req.sanitize('id').escape();
-    const post = {
-        idschedule_track: idschedule_track
-    };
-    connect.con.query('SELECT date, initial_time, final_time from schedule_track order by distance where idtrack = ? order by distance desc', post,
-        function (err, rows, fields) {
-            if (!err) {
-
-                if (rows.length == 0) {
-                    res.status(404).send({
-                        "msg": "data not found"
-                    });
-                } else {
-                    res.status(200).send(rows);
-                }
-            } else
-                res.status(400).send({
-                    "msg": err.code
-                });
+    const post = { idschedule_track : idschedule_track };
+    connect.con.query('SELECT * FROM schedule_track where ?', post, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+            res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
         }
-    );
+        else {
+            if (rows.length == 0) {
+                res.status(jsonMessages.db.noRecords.status).send(jsonMessages.db.noRecords);
+            }
+            else {
+                res.send(rows);
+            }
+        }
+    });
 }
+
 
 function save(req, res) {
 
 
-    const date = req.sanitize('date').escape();
+    const day = req.sanitize('day').escape();
     const initial_time = req.sanitize('initial_time').escape();
     const final_time = req.sanitize('final_time').escape();
-
+    const track_fk = req.sanitize('track_fk').escape();
+    const active = req.sanitize('active').escape();
     const errors = req.validationErrors();
 
 	 if (errors) {
@@ -57,13 +54,15 @@ function save(req, res) {
         return;
     }
     else {
-        if (date!= "NULL" && initial_time != "NULL" && final_time != 'NULL') {
+        if (day!= "NULL" && initial_time != "NULL" && final_time != 'NULL' && track_fk != "NULL" && active != 0) {
 
 		   const post = {
 
-           date : date,
+           day : day,
            initial_time : initial_time,
            final_time : final_time,
+           track_fk : track_fk,
+           active : active,
 
         };
 
@@ -84,10 +83,25 @@ function save(req, res) {
     };
 	}
 }
+
+function deleteLogico(req, res) {
+    const update = [0, req.sanitize('id').escape()];
+    const query = connect.con.query('UPDATE schedule_track SET active = ? WHERE idschedule_track=?', update, function(err, rows, fields) {
+        console.log(query.sql);
+        if (!err) {
+            res.status(jsonMessages.db.successDelete.status).send(jsonMessages.db.successDelete);
+        }
+        else {
+            console.log(err);
+
+            res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+        }
+    });
+}
 module.exports = {
     read: read,
     readID: readID,
     save: save,
     //update: update,
-    //deleteID: deleteID
+    deleteLogico: deleteLogico
 };

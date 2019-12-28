@@ -1,14 +1,13 @@
-const saltRounds = 10;
 const connect = require('../config/connectMySQL');
-var bcrypt = require('bcryptjs');
+const jsonMessagesPath = __dirname + "/../assets/jsonMessages/";
 const jsonMessages = require('../assets/jsonMessages/bd');
 
 function read(req, res) {
-
-    connect.con.query('SELECT * from type_track where active = 1',
+    //criar e executar a query de leitura na BD
+    connect.con.query('SELECT * from sponsership where active = 1',
         function (err, rows, fields) {
             if (!err) {
-
+                //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados (rows).
                 if (rows.length == 0) {
                     res.status(404).send("Data not found");
                 } else {
@@ -18,17 +17,16 @@ function read(req, res) {
         });
 }
 
-
 function readID(req, res) {
-
-    const idtype_track = req.sanitize('id').escape();
+    //criar e executar a query de leitura na BD
+    const id_sponsership = req.sanitize('id').escape();
     const post = {
-        idtype_track: idtype_track
+        id_sponsership: id_sponsership
     };
-    connect.con.query('SELECT * from type_track where ? ', post,
+    connect.con.query('SELECT * from sponsership where ?', post,
         function (err, rows, fields) {
             if (!err) {
-
+                //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados(rows).
                 if (rows.length == 0) {
                     res.status(404).send({
                         "msg": "data not found"
@@ -42,32 +40,34 @@ function readID(req, res) {
                 });
         }
     );
-}
+};
 
 function save(req, res) {
-
-
-    const type = req.sanitize('type').escape();
-    const active = req.sanitize('active').escape();
+    
+    
+    const preco_patrocinio = req.sanitize('preco_patrocinio').escape();
+    const txtNotas = req.sanitize('txtNotas').escape();
+    const validade_patrocinio = req.sanitize('validade_patrocinio').escape(); 
+    const active = req.sanitize('active').escape();        
     const errors = req.validationErrors();
-
-	 if (errors) {
+     
+     if (errors) {
         res.send(errors);
         return;
     }
     else {
-        if (type!= "NULL" && active!= 0) {
-
-		   const post = {
-
-           type : type,
+        if (preco_patrocinio != "NULL" && txtNotas != "NULL" && validade_patrocinio!= 'NULL' && active != 0) {
+          
+           const post = {
+            
+           preco_patrocinio : preco_patrocinio,
+           txtNotas : txtNotas,
+           validade_patrocinio : validade_patrocinio,
            active : active,
 
-
-
         };
-
-        const query = connect.con.query('INSERT INTO type_track SET ?', post, function (err, rows, fields) {
+        
+        const query = connect.con.query('INSERT INTO sponsership SET ?', post, function (err, rows, fields) {
             console.log(query.sql);
             if (!err) {
                 res.status(200).location(rows.insertId).send({
@@ -82,13 +82,16 @@ function save(req, res) {
             }
         });
     };
-	}
+    }
 }
+
+
+
 
 
 function deleteLogico(req, res) {
     const update = [0, req.sanitize('id').escape()];
-    const query = connect.con.query('UPDATE type_track SET active = ? WHERE idtype_track=?', update, function(err, rows, fields) {
+    const query = connect.con.query('UPDATE sponsership SET active = ? WHERE id_sponsership=?', update, function(err, rows, fields) {
         console.log(query.sql);
         if (!err) {
             res.status(jsonMessages.db.successDelete.status).send(jsonMessages.db.successDelete);
@@ -101,11 +104,10 @@ function deleteLogico(req, res) {
     });
 }
 
-
 module.exports = {
     read: read,
     readID: readID,
     save: save,
-    //update: update,
-    deleteLogico: deleteLogico
+    
+    deleteLogico: deleteLogico,
 };
