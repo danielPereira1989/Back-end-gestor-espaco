@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controllerSpaceManager = require('../controllers/spacemanager.controller.js');
+//const controllerSpaceManager = require('../controllers/spacemanager.controller.js');
 const controllerSponser = require('../controllers/sponser.controller.js');
 const controllerSponserShip = require('../controllers/sponsership.controller.js');
 const controllerMaterials = require('../controllers/materials.controller.js');
@@ -22,11 +22,11 @@ router.get('/', function(req, res) {  //rota express....
 
 
 
-router.get('/spacemanager/', controllerSpaceManager.read);
-router.get('/spacemanager/inf/:email', controllerSpaceManager.readInfo);
-router.get('/spacemanager/:email', controllerSpaceManager.readEmail);
-router.put('/spacemanager/:id', controllerSpaceManager.update);
-router.post('/spacemanager/', controllerSpaceManager.save);
+//router.get('/spacemanager/', controllerSpaceManager.read);
+//router.get('/spacemanager/inf/:email', controllerSpaceManager.readInfo);
+//router.get('/spacemanager/:email', controllerSpaceManager.readEmail);
+//router.put('/spacemanager/:id', controllerSpaceManager.update);
+//router.post('/spacemanager/', controllerSpaceManager.save);
 
 router.get('/sponser/', controllerSponser.read);
 router.get('/sponser/:id', controllerSponser.readID);
