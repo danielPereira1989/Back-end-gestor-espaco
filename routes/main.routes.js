@@ -22,7 +22,7 @@ router.get('/', function(req, res) {  //rota express....
 
 
 
-//router.get('/spacemanager/', controllerSpaceManager.read);
+router.get('/spacemanager/', controllerSpaceManager.read);
 //router.get('/spacemanager/inf/:email', controllerSpaceManager.readInfo);
 //router.get('/spacemanager/:email', controllerSpaceManager.readEmail);
 //router.put('/spacemanager/:id', controllerSpaceManager.update);
