@@ -45,6 +45,7 @@ router.get('/materials/', controllerMaterials.read);
 router.get('/materials/:id', controllerMaterials.readID);
 router.post('/materials/', controllerMaterials.save);
 router.put('/materials/del/:id',controllerMaterials.deleteLogico);
+router.put('/materials/:id', controllerMaterials.update);
 
 
 router.get('/track/', controllerTrack.read);
