@@ -4,11 +4,11 @@ var bcrypt = require('bcryptjs');
 const jsonMessages = require('../assets/jsonMessages/bd');
 
 function read(req, res) {
-
+    
     connect.con.query('SELECT * from type_track where active = 1',
         function (err, rows, fields) {
             if (!err) {
-
+    
                 if (rows.length == 0) {
                     res.status(404).send("Data not found");
                 } else {
@@ -20,7 +20,7 @@ function read(req, res) {
 
 
 function readID(req, res) {
-
+  
     const idtype_track = req.sanitize('id').escape();
     const post = {
         idtype_track: idtype_track
@@ -28,7 +28,7 @@ function readID(req, res) {
     connect.con.query('SELECT * from type_track where ? ', post,
         function (err, rows, fields) {
             if (!err) {
-
+                
                 if (rows.length == 0) {
                     res.status(404).send({
                         "msg": "data not found"
@@ -45,28 +45,29 @@ function readID(req, res) {
 }
 
 function save(req, res) {
-
+    
 
     const type = req.sanitize('type').escape();
+    req.checkBody('type', "insira apenas texto").matches(/^[a-z ]+$/i);
     const active = req.sanitize('active').escape();
     const errors = req.validationErrors();
-
+	 
 	 if (errors) {
         res.send(errors);
         return;
     }
     else {
         if (type!= "NULL" && active!= 0) {
-
+          
 		   const post = {
-
+            
            type : type,
            active : active,
-
-
-
+           
+           
+            
         };
-
+        
         const query = connect.con.query('INSERT INTO type_track SET ?', post, function (err, rows, fields) {
             console.log(query.sql);
             if (!err) {

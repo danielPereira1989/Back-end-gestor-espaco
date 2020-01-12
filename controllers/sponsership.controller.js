@@ -50,6 +50,12 @@ function save(req, res) {
     const validade_patrocinio = req.sanitize('validade_patrocinio').escape(); 
     const active = req.sanitize('active').escape();        
     const errors = req.validationErrors();
+
+    
+    req.checkBody('txtNotas', "insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody('preco_patrocinio', "insira apenas numeros").isNumeric();
+    req.checkBody('validade_patrocionio', "insira apenas texto").isDate();
+    
      
      if (errors) {
         res.send(errors);
@@ -85,7 +91,42 @@ function save(req, res) {
     }
 }
 
+function update(req, res) {
+    const id_sponsership = req.sanitize('id_sponsership').escape();
+    const preco_patrocinio = req.sanitize('preco_patrocinio').escape();
+    const txtNotas = req.sanitize('txtNotas').escape();
+    const validade_patrocinio = req.sanitize('validade_patrocinio').escape(); 
+    const sponser_fk = req.sanitize('sponser_fk').escape();
 
+    req.checkBody('txtNotas', "insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody('preco_patrocinio', "insira apenas numeros").isNumeric();
+    req.checkBody('validade_patrocionio', "insira apenas texto").isDate();
+    
+    
+    const errors = req.validationErrors();
+ 
+ if (errors) {
+    res.send(errors);
+    return;
+}
+else {
+    if (preco_patrocinio != "NULL" && txtNotas != "NULL" && validade_patrocinio!= 'NULL' && sponser_fk != 'NULL') {
+        const update = [preco_patrocinio, txtNotas, validade_patrocinio, sponser_fk,id_sponsership];
+        const query = connect.con.query('UPDATE sponsership SET preco_patrocinio=?, txtNotas=?, validade_patrocinio=?, sponser_fk=? WHERE id_sponsership=?', update, function(err, rows, fields) {
+            console.log(query.sql);
+            if (!err) {
+                console.log("Number of records updated: " + rows.affectedRows);
+                res.status(200).send({ "msg": "update with success" });
+            } else {
+                res.status(400).send({ "msg": err.code });
+                console.log('Error while performing Query.', err);
+            }
+        });
+    }
+    
+
+}
+}
 
 
 
@@ -108,6 +149,6 @@ module.exports = {
     read: read,
     readID: readID,
     save: save,
-    
+    update: update,
     deleteLogico: deleteLogico,
 };

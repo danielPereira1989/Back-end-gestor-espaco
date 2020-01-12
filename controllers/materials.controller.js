@@ -47,38 +47,38 @@ function readID(req, res) {
 
 
 
-    function save(req, res) {
-
-
+function save(req, res) {
         const nome_material = req.sanitize('nome_material').escape();
-        const tipo_material = req.sanitize('tipo_material').escape();
-        const quantidade = req.sanitize('quantidade').escape();
+        const quantidade = req.sanitize('quantidade').escape(); 
         const descricao = req.sanitize('descricao').escape();
         const idEspaco_fk = req.sanitize('idEspaco_fk').escape();
         const referencia_material = req.sanitize('referencia_material').escape();
-        const active = req.sanitize('active').escape();
+        const active = req.sanitize('active').escape();        
         const errors = req.validationErrors();
 
+        req.checkBody("nome_material", "Insira apenas texto").matches(/^[a-z ]+$/i);
+        req.checkBody('quantidade', "insira apenas numeros").isNumeric();
+        req.checkBody("descricao", "Insira apenas texto").matches(/^[a-z ]+$/i);
+         
          if (errors) {
             res.send(errors);
             return;
         }
         else {
-            if (nome_material != "NULL" && tipo_material != "NULL" && quantidade != 'NULL' &&
+            if (nome_material != "NULL" && quantidade != 'NULL' && 
             descricao != "NULL" && idEspaco_fk != "NULL" && referencia_material != 'NULL' && active != 0) {
-
+              
                const post = {
-
+                
                 nome_material : nome_material,
-                tipo_material : tipo_material,
-                quantidade : quantidade,
+                quantidade : quantidade,                
                 descricao : descricao,
                 idEspaco_fk : idEspaco_fk,
                 referencia_material : referencia_material,
                 active : active,
 
             };
-
+            
             const query = connect.con.query('INSERT INTO materials SET ?', post, function (err, rows, fields) {
                 console.log(query.sql);
                 if (!err) {
@@ -106,7 +106,7 @@ function readID(req, res) {
             }
             else {
                 console.log(err);
-
+    
                 res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
             }
         });

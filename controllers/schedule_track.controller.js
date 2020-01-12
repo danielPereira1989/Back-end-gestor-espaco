@@ -4,11 +4,11 @@ var bcrypt = require('bcryptjs');
 const jsonMessages = require('../assets/jsonMessages/bd');
 
 function read(req, res) {
-
+    
     connect.con.query('SELECT * from schedule_track where active = 1',
         function (err, rows, fields) {
             if (!err) {
-
+    
                 if (rows.length == 0) {
                     res.status(404).send("Data not found");
                 } else {
@@ -40,7 +40,7 @@ function readID (req, res) {
 
 
 function save(req, res) {
-
+    
 
     const day = req.sanitize('day').escape();
     const initial_time = req.sanitize('initial_time').escape();
@@ -49,23 +49,25 @@ function save(req, res) {
     const active = req.sanitize('active').escape();
     const errors = req.validationErrors();
 
+    
+	 
 	 if (errors) {
         res.send(errors);
         return;
     }
     else {
         if (day!= "NULL" && initial_time != "NULL" && final_time != 'NULL' && track_fk != "NULL" && active != 0) {
-
+          
 		   const post = {
-
+            
            day : day,
            initial_time : initial_time,
            final_time : final_time,
            track_fk : track_fk,
            active : active,
-
+            
         };
-
+        
         const query = connect.con.query('INSERT INTO schedule_track SET ?', post, function (err, rows, fields) {
             console.log(query.sql);
             if (!err) {

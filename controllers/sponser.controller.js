@@ -52,6 +52,12 @@ function save(req, res) {
     const pessoa_contacto = req.sanitize('pessoa_contacto').escape();
     const active = req.sanitize('active').escape();        
     const errors = req.validationErrors();
+
+    req.checkBody("nome_patrocinador", "Insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody('Morada', "insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody('NIF', "insira apenas numeros").isNumeric();
+    req.checkBody('Contacto', "insira apenas numeros").isNumeric();
+    req.checkBody('pessoa_contacto', "insira apenas numeros").isNumeric();
      
      if (errors) {
         res.send(errors);
@@ -90,7 +96,43 @@ function save(req, res) {
     }
 }
 
-
+function update(req, res) {
+    const nome_patrocinador = req.sanitize('nome_patrocinador').escape();
+    const NIF = req.sanitize('NIF').escape();
+    const Morada = req.sanitize('Morada').escape(); 
+    const Contacto = req.sanitize('Contacto').escape();
+    const pessoa_contacto = req.sanitize('pessoa_contacto').escape();
+    const id_patrocinador = req.sanitize('id_patrocinador').escape();
+           
+    req.checkBody("nome_patrocinador", "Insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody('Morada', "insira apenas texto").matches(/^[a-z ]+$/i);
+    req.checkBody('NIF', "insira apenas numeros").isNumeric();
+    req.checkBody('Contacto', "insira apenas numeros").isNumeric();
+    req.checkBody('pessoa_contacto', "insira apenas numeros").isNumeric();
+    
+    const errors = req.validationErrors();
+     
+     if (errors) {
+        res.send(errors);
+        return;
+    }
+    else {
+        if (nome_patrocinador != "NULL" && NIF != "NULL" && Morada != 'NULL' && 
+        Contacto != "NULL" && pessoa_contacto != "NULL") {
+        const update = [nome_patrocinador, NIF, Morada, Contacto, pessoa_contacto, id_patrocinador];
+        const query = connect.con.query('UPDATE sponser SET nome_patrocinador=?, NIF=?, Morada=?, Contacto=?, pessoa_contacto=? WHERE id_patrocinador =?', update, function(err, rows, fields) {
+            console.log(query.sql);
+            if (!err) {
+                console.log("Number of records updated: " + rows.affectedRows);
+                res.status(200).send({ "msg": "update with success" });
+            } else {
+                res.status(400).send({ "msg": err.code });
+                console.log('Error while performing Query.', err);
+            }
+        });
+    }  
+}
+}
 
 
 
@@ -113,6 +155,6 @@ module.exports = {
     read: read,
     readID: readID,
     save: save,
-    
+    update: update,
     deleteLogico: deleteLogico,
 };

@@ -4,11 +4,11 @@ const connect = require('../config/connectMySQL');
 var bcrypt = require('bcryptjs');
 
 function read(req, res) {
-
+    
     connect.con.query('SELECT * from track where active = 1',
         function (err, rows, fields) {
             if (!err) {
-
+                
                 if (rows.length == 0) {
                     res.status(404).send("Data not found");
                 } else {
@@ -37,38 +37,36 @@ function readID(req, res) {
     });
 }
 
-function save(req, res) {
-
-
+/*function save(req, res) {
     const track_name = req.sanitize('track_name').escape();
     const distance = req.sanitize('distance').escape();
-    const idTracktype_fk = req.sanitize('idTracktype_fk').escape();
+    const idTracktype_fk = req.sanitize('idTracktype_fk').escape();	
     const idActivity_fk = req.sanitize('idActivity_fk').escape();
     const idEspacoT_fk = req.sanitize('idEspacoT_fk').escape();
 	const capacity = req.sanitize('capacity').escape();
 	const active = req.sanitize('active').escape();
-
+     
     const errors = req.validationErrors();
-
+	 
 	 if (errors) {
         res.send(errors);
         return;
     }
     else {
-        if (track_name != "NULL" && distance != "NULL" && idTracktype_fk != 'NULL' &&
+        if (track_name != "NULL" && distance != "NULL" && idTracktype_fk != 'NULL' && 
         idActivity_fk != "NULL" && idEspacoT_fk != "NULL" && capacity != 'NULL' && active != 0) {
-
+          
 		   const post = {
-
+            
             track_name : track_name,
             distance : distance,
-            idTracktype_fk : idTracktype_fk,
+            idTracktype_fk : idTracktype_fk,            
             idActivity_fk : idActivity_fk,
             idEspacoT_fk : idEspacoT_fk,
             capacity : capacity,
             active : active,
         };
-
+        
         const query = connect.con.query('INSERT INTO track SET ?', post, function (err, rows, fields) {
             console.log(query.sql);
             if (!err) {
@@ -85,15 +83,58 @@ function save(req, res) {
         });
     };
 	}
+}*/
+function save(req, res) {
+    
+    const track_name = req.sanitize('track_name').escape();
+    const distance = req.sanitize('distance').escape();
+    const idTracktype_fk = req.sanitize('idTracktype_fk').escape();	
+    const idEspacoT_fk = req.sanitize('idEspacoT_fk').escape();
+	const capacity = req.sanitize('capacity').escape();
+    const active = req.sanitize('active').escape();
+
+    const errors = req.validationErrors();
+    
+    if (errors) {
+        res.send(errors);
+        return;
+    }
+    else {
+        if (track_name != "NULL" && distance != "NULL" && idTracktype_fk != "NULL" && 
+     idEspacoT_fk != "NULL" && capacity != "NULL" && active != 0) {
+            const post = { 
+            track_name : track_name,
+            distance : distance,
+            idTracktype_fk: idTracktype_fk,
+            idEspacoT_fk:idEspacoT_fk,
+            capacity : capacity,
+            active:active,
+            };
+            
+            const query = connect.con.query('INSERT INTO track SET ?', post, function(err, rows, fields) {
+                console.log(query.sql);
+                if (!err) {
+                    console.log(rows.insertId);
+                    res.status(jsonMessages.db.successInsert.status).location(rows.insertId).send(jsonMessages.db.successInsert);
+                }
+                else {
+                    console.log(err);
+                    res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+                }
+            });
+        }
+        else
+            res.status(jsonMessages.db.requiredData.status).send(jsonMessages.db.requiredData);
+    }
 }
 
 function readAll(req, res) {
-
-    connect.con.query('SELECT * FROM track a, type_track b, activity d, space e WHERE a.idTracktype_fk = b.idtype_track AND a.idActivity_fk = d.id_Atividade AND a.idEspacoT_fk = e.id_espaco',
+    
+    connect.con.query('SELECT * FROM track a, type_track b, activity d, space e WHERE a.idTracktype_fk = b.idtype_track AND a.idActivity_fk = d.id_Atividade AND a.idEspacoT_fk = e.id_espaco', 
 
     function (err, rows, fields) {
         if (!err) {
-
+            
             if (rows.length == 0) {
                 res.status(404).send("Data not found");
             } else {
@@ -117,11 +158,44 @@ function deleteLogico(req, res) {
         }
     });
 }
+
+function update(req, res) {
+    const track_name = req.sanitize('track_name').escape();
+    const distance = req.sanitize('distance').escape();
+    const idTracktype_fk = req.sanitize('idTracktype_fk').escape();	
+    const idEspacoT_fk = req.sanitize('idEspacoT_fk').escape();
+	const capacity = req.sanitize('capacity').escape();
+    const idTrack = req.sanitize('idTrack').escape();
+    const errors = req.validationErrors();
+ 
+ if (errors) {
+    res.send(errors);
+    return;
+}
+else {
+    if  (track_name!= "NULL" && distance != "NULL" && capacity!= 'NULL') {
+        const update = [track_name, distance, idTracktype_fk, idEspacoT_fk, capacity, idTrack];
+        const query = connect.con.query('UPDATE track SET track_name=?, distance=?, idTracktype_fk=?, idEspacoT_fk=?, capacity=? WHERE idTrack=?', update, function(err, rows, fields) {
+            console.log(query.sql);
+            if (!err) {
+                console.log("Number of records updated: " + rows.affectedRows);
+                res.status(200).send({ "msg": "update with success" });
+            } else {
+                res.status(400).send({ "msg": err.code });
+                console.log('Error while performing Query.', err);
+            }
+        });
+    }
+    
+
+}
+}
+
 module.exports = {
     read: read,
     readID: readID,
     save: save,
     readAll : readAll,
-    //update: update,
+    update: update,
     deleteLogico: deleteLogico,
 };
