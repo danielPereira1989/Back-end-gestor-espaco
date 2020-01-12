@@ -6,7 +6,7 @@ const connect = require('../config/connectMySQL'); //função de leitura que ret
 function read(req, res) {
     //ler perfil completo
     const query = connect.con.query('SELECT * FROM  users a, space_manager b WHERE a.tipo = 1 AND a.ative = 1;', function(err, rows, fields) {
-        console.log(query.sql); 
+        console.log(query.sql);
         if (err) {
             console.log(err);
             res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
@@ -65,7 +65,7 @@ function readEmail(req, res) {
 }
 
 function save(req, res) {
-    
+
     const users_fk = req.sanitize('users_fk').escape();
     const nome_gestor_espaco = req.sanitize('nome_gestor_espaco').escape();
     const data_nascimento = req.sanitize('data_nascimento').escape();
@@ -83,15 +83,15 @@ function save(req, res) {
     req.checkBody('nif', "insira apenas numeros").isNumeric();
     req.checkBody('telefone', "insira apenas numeros").isNumeric();
     req.checkBody("email_gestor", "Insira um email válido").isEmail();
-    
+
     if (errors) {
         res.send(errors);
         return;
     }
     else {
         if (nome_gestor_espaco != "NULL" && email_gestor != 'NULL' && morada != "NULL" && nif != "NULL" && data_nascimento != "NULL" && telefone != "NULL") {
-            const post = { 
-                nome_gestor_espaco: nome_gestor_espaco,  
+            const post = {
+                nome_gestor_espaco: nome_gestor_espaco,
                 email_gestor: email_gestor,
                 morada: morada,
                 nif: nif,
@@ -100,7 +100,7 @@ function save(req, res) {
                 idEspacoSM_fk : idEspacoSM_fk,
                 users_fk : users_fk,
             };
-            
+
             const query = connect.con.query('INSERT INTO space_manager SET ?', post, function(err, rows, fields) {
                 console.log(query.sql);
                 if (!err) {
@@ -137,13 +137,13 @@ function update(req, res) {
     req.checkBody("email_gestor", "Insira um email válido").isEmail();
 
     const errors = req.validationErrors();
-    
+
     if (errors) {
         res.send(errors);
         return;
     }
     else {
-        
+
         if(nome_gestor_espaco != "NULL" && morada != "NULL" && nif != "NULL" && data_nascimento != "NULL" && telefone != "NULL" ){
         const update = [nome_gestor_espaco, morada, nif, telefone, data_nascimento, idEspacoSM_fk, users_fk, id_gestor_espaco, email_gestor];
         const query = connect.con.query('UPDATE space_manager SET nome_gestor_espaco=?, morada=?, nif=?, telefone=?, data_nascimento=?, idEspacoSM_fk=?, users_fk=?, email_gestor=? WHERE id_gestor_espaco =?', update, function(err, rows, fields) {
@@ -193,12 +193,12 @@ function deleteF(req, res) {
 }
 */
 function readAll(req, res) {
-    
+
     connect.con.query('SELECT * FROM  space_manager a, space b, users c WHERE a.idEspacoSM_fk = b.id_espaco AND a.users_fk = c.id AND c.tipo = 1 AND c.ative = 1;',
 
     function (err, rows, fields) {
         if (!err) {
-            
+
             if (rows.length == 0) {
                 res.status(404).send("Data not found");
             } else {
@@ -219,5 +219,5 @@ module.exports = {
     update: update,
     //deleteL: deleteL,
     //deleteF: deleteF,
-    readAll : readAll,
+    //readAll : readAll,
 }
