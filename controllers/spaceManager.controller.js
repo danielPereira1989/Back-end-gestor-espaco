@@ -25,7 +25,7 @@ function read(req, res) {
 function readInfo(req, res){
     const id_gestor_espaco = req.sanitize('email').escape();
     const post = {email_gestor: id_gestor_espaco};
-    const query = connect.con.query ('SELECT nome_gestor_espaco, morada, nif, telefone, data_nascimento,email_gestor FROM space_manager where ?', post, function(err, rows, fields){
+    const query = connect.con.query ('SELECT nome_gestor_espaco, morada, nif, telefone, data_nascimento,email_gestor, idEspacoSM_fk FROM space_manager where ?', post, function(err, rows, fields){
         console.log(query.sql);
         if (err) {
             console.log(err);
