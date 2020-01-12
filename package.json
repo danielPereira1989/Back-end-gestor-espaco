@@ -1,0 +1,20 @@
+{
+  "name": "back-end-gestor-espaco",
+  "version": "1.0.0",
+  "description": "Uc-pw",
+  "main": "loader.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielPereira1989/Back-end-gestor-espaco.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielPereira1989/Back-end-gestor-espaco/issues"
+  },
+  "homepage": "https://github.com/danielPereira1989/Back-end-gestor-espaco#readme"
+}
