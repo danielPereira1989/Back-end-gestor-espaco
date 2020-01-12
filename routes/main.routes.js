@@ -39,12 +39,13 @@ router.get('/sponsership/:id', controllerSponserShip.readID);
 router.post('/sponsership/', controllerSponserShip.save);
 router.put('/sponsership/del/:id', controllerSponserShip.deleteLogico);
 router.put('/sponsership/:id', controllerSponserShip.update);
+router.get('/sponsershipreadAll/', controllerSponserShip.readAll);
 
 
 router.get('/materials/', controllerMaterials.read);
 router.get('/materials/:id', controllerMaterials.readID);
 router.post('/materials/', controllerMaterials.save);
-router.put('/materials/del/:id',controllerMaterials.deleteLogico);
+router.put('/materials/del/:id_material',controllerMaterials.deleteLogico);
 router.put('/materials/:id', controllerMaterials.update);
 
 

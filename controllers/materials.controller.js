@@ -48,35 +48,35 @@ function readID(req, res) {
 
 
     function save(req, res) {
-    
-    
+
+
         const nome_material = req.sanitize('nome_material').escape();
-        const quantidade = req.sanitize('quantidade').escape(); 
+        const quantidade = req.sanitize('quantidade').escape();
         const descricao = req.sanitize('descricao').escape();
         const idEspaco_fk = req.sanitize('idEspaco_fk').escape();
         const referencia_material = req.sanitize('referencia_material').escape();
-              
+
         const errors = req.validationErrors();
-         
+
          if (errors) {
             res.send(errors);
             return;
         }
         else {
-            if (nome_material != "NULL" && quantidade != 'NULL' && 
+            if (nome_material != "NULL" && quantidade != 'NULL' &&
             descricao != "NULL" && idEspaco_fk != "NULL" && referencia_material != 'NULL' ) {
-              
+
                const post = {
-                
+
                 nome_material : nome_material,
-                quantidade : quantidade,                
+                quantidade : quantidade,
                 descricao : descricao,
                 idEspaco_fk : idEspaco_fk,
                 referencia_material : referencia_material,
-                
+
 
             };
-            
+
             const query = connect.con.query('INSERT INTO materials SET ?', post, function (err, rows, fields) {
                 console.log(query.sql);
                 if (!err) {
@@ -97,14 +97,14 @@ function readID(req, res) {
 
     function update(req, res) {
         const nome_material = req.sanitize('nome_material').escape();
-        const quantidade = req.sanitize('quantidade').escape(); 
+        const quantidade = req.sanitize('quantidade').escape();
         const descricao = req.sanitize('descricao').escape();
         const idEspaco_fk = req.sanitize('idEspaco_fk').escape();
         const referencia_material = req.sanitize('referencia_material').escape();
         const id_material = req.sanitize('id_material').escape();
-    
+
         const errors = req.validationErrors();
-     
+
      if (errors) {
         res.send(errors);
         return;
@@ -123,13 +123,13 @@ function readID(req, res) {
                 }
             });
         }
-        
-    
+
+
     }
     }
 
     function deleteLogico(req, res) {
-        const update = [0, req.sanitize('id').escape()];
+        const update = [0, req.sanitize('id_espaco').escape()];
         const query = connect.con.query('UPDATE materials SET active = ? WHERE id_material=?', update, function(err, rows, fields) {
             console.log(query.sql);
             if (!err) {
@@ -137,7 +137,7 @@ function readID(req, res) {
             }
             else {
                 console.log(err);
-    
+
                 res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
             }
         });
@@ -149,5 +149,5 @@ module.exports = {
     save : save,
     deleteLogico: deleteLogico,
     update: update,
-    
+
 };
