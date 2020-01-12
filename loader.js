@@ -6,7 +6,7 @@ const session = require('express-session');
 const expressSanitizer = require('express-sanitizer');
 const bodyParser = require('body-parser');
 const models = require("./models/");
-const expressValidator = require('express-validator'); 
+const expressValidator = require('express-validator');
 
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 app.use(expressSanitizer());
@@ -27,7 +27,7 @@ app.use(session({
 app.use(expressValidator());
 
 
-app.use(function(req, res, next) {  
+app.use(function(req, res, next) {
     //check if session exists
     if (global.sessData === undefined) {
         global.sessData = req.session;
@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
     }else {
         // yes, cookie was already present
         console.log('session exists', global.sessData.ID);
-        
+
     }
     next();
 });
