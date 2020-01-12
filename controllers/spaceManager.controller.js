@@ -78,7 +78,7 @@ function save(req, res) {
     const errors = req.validationErrors();
 
     req.checkBody("nome_gestor_espaco", "Insira apenas texto").matches(/^[a-z ]+$/i);
-    req.checkBody('data_nascimento', "Data formato errado").isDate();
+    //req.checkBody('data_nascimento', "Data formato errado").isDate();
     req.checkBody('morada', "insira apenas texto").matches(/^[a-z ]+$/i);
     req.checkBody('nif', "insira apenas numeros").isNumeric();
     req.checkBody('telefone', "insira apenas numeros").isNumeric();
@@ -130,7 +130,7 @@ function update(req, res) {
     const email_gestor = req.sanitize('email_gestor').escape();
 
     req.checkBody("nome_gestor_espaco", "Insira apenas texto").matches(/^[a-z ]+$/i);
-    req.checkBody('data_nascimento', "Data formato errado").isDate();
+    //req.checkBody('data_nascimento', "Data formato errado").isDate();
     req.checkBody('morada', "insira apenas texto").matches(/^[a-z ]+$/i);
     req.checkBody('nif', "insira apenas numeros").isNumeric();
     req.checkBody('telefone', "insira apenas numeros").isNumeric();
@@ -219,5 +219,5 @@ module.exports = {
     update: update,
     //deleteL: deleteL,
     //deleteF: deleteF,
-    //readAll : readAll,
+    readAll : readAll,
 }
