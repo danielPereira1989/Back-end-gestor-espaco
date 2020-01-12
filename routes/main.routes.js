@@ -13,9 +13,9 @@ const jsonMessagesPath = __dirname + "/../assets/jsonMessages/";
 const jsonMessages = require(jsonMessagesPath + "login");
 
 router.get('/', function(req, res) {  //rota express....
-   res.send(path.resolve(__dirname + '/../../Front-end-gestor-espaco/'))
+   //res.send(path.resolve(__dirname + '/../../Front-end-gestor-espaco/'))
 
-   //res.send("PW");
+   res.send("PW");
    //res.end();
 });
 
