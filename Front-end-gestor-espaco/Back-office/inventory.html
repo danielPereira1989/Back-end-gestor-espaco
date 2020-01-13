@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Karts' N Go</title>
+	<meta charset="utf-8">
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="assets/css/ready.css">
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<script src="https://use.fontawesome.com/9a14895eb3.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png" >
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a  class="logo">
+				Karts' N GO
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span> 
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					
+					
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown" >
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.png" alt="user-img" width="40" class="img-circle">
+								<span id="nome1"></span></a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<div class="user-box">
+										<div class="u-img"><img src="assets/img/profile.png" alt="user"></div>
+										<div class="u-text">
+											<h4 id="nome2"></h4>
+											<p class="text-muted" id="email1"></p><button id="logout" class="btn btn-rounded btn-danger btn-sm">Logout</button></div>
+										</div>
+									</li>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="profile.html"><i class="ti-user"></i> O meu perfil</a>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					
+					<ul class="nav">
+						<li class="nav-item">
+							<a href="indexback.html" >
+									<i class="fas fa-chart-line"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="space.html">
+									<i class="fas fa-road"></i>
+								<p>Pistas</p>
+							</a>
+						</li>
+						
+						<li class="nav-item active">
+							<a href="inventory.html">
+									<i class="fas fa-tools"></i>
+								<p>Inventário</p>
+								
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="availablematerial.html">
+								<i class="fas fa-cog"></i>
+								<p>Material Disponível</p>
+								
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="sponsers.html" >
+									<i class="fas fa-handshake"></i>
+								<p>Patrocinadores</p>
+								
+							</a>
+						</li>
+						
+						
+						
+					
+					</ul>
+				</div>
+			</div>
+			<div class="main-panel">
+				<div class="content">
+					<div class="container-fluid">
+					<div class="row">
+							<div class="col-md-12">
+
+								<div class="card">
+									<div class="card-header2">
+										<div class="card-title" style="text-align: center">Registo e Gestão de Material</div>
+						
+						<hr class="my-2">
+						<form id="formMateriais">
+							<div class="row">
+								<div class="form-group col">
+									<input id="referencia_material" name="referencia_material" placeholder="Referência do material" type="number" class="form-control" data-rule="required|number" required="">
+								</div>
+								<div class="form-group col">
+									<input id="nome_material" name="nome_material" placeholder="Nome do Material" type="text"  class="form-control" required="">
+								</div>
+								</div>	
+							<div class="row">
+								<div class="form-group col">
+									<input id="descricao" name="descricao" placeholder="Descrição" type="text" class="form-control" required="">
+								</div>
+								<div class="form-group col">
+									<input id="quantidade" name="quantidade" placeholder="Quantidade" type="number" class="form-control" data-rule="required|number" required="">
+								</div>
+							</div>
+						
+							<div class="form-row">
+								<div class="form-group col-ms-12">
+									<input  id="submitMaterial" type="submit" class="btn btn-warning mb-2" value="Submeter">
+										
+								
+									<button id="eliminar" type="reset" class="btn btn-warning mb-2">
+										Limpar formulário
+									</button>
+								</div>
+							</div>
+						</form>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		
+		<div class="row" >
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header" >	
+						<h4 class="card-title">Inventário</h4>
+					</div>
+					<br>
+					<div>
+					<div class="row">
+						<div class="col-md-12">
+							<table id="tblMaterials" class="table mt-3"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body text-center">									
+				<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
+				<p>
+				<b>We'll let you know when it's done</b></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+
+  <!-- Plugin JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.26.9/sweetalert2.all.min.js"></script>
+
+<script src="assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="assets/js/ready.min.js"></script>
+<script src="assets/js/inventory.js"> </script>
+
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+    <title>Karts' N Go</title>
+    <meta name="description" content="">	
+	<meta name="author" content="">
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png" >
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" href="img/favicon/favicon-32x32.png" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/favicon/favicon-144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/favicon/favicon-72x72.png">
+	<link rel="apple-touch-icon-precomposed" href="img/favicon/favicon-54x54.png">
+	
+	<!-- CSS
+	================================================== -->
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Template styles-->
+	<link rel="stylesheet" href="css/style.css">
+	<!-- Responsive styles-->
+	<link rel="stylesheet" href="css/responsive.css">
+	<!-- FontAwesome -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<!-- Animation -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Prettyphoto -->
+	<link rel="stylesheet" href="css/prettyPhoto.css">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="css/owl.carousel.css">
+	<link rel="stylesheet" href="css/owl.theme.css">
+	<!-- Flexslider -->
+	<link rel="stylesheet" href="css/flexslider.css">
+	<!-- Flexslider -->
+	<link rel="stylesheet" href="css/cd-hero.css">
+	<!-- Style Swicther -->
+	<link id="style-switch" href="css/presets/preset1.css" media="screen" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    
+    	<link id="style-switch" href="css/presets/preset3.css" media="screen" rel="stylesheet" type="text/css">
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+ 	//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 	 //<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+ 	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. 
+    [if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.26.9/sweetalert2.all.min.js"></script>
+
+
+</head>
+	
+<body>
+
+	<div class="body-inner">
+	<!-- Header start -->
+	<header id="header" class="navbar-fixed-top header2 newheader" role="banner">
+		<div class="container">
+			<div class="row">
+				<!-- Logo start -->
+				<div class="navbar-header newheader">
+				    <button type="button" class="navbar-toggle newheader" data-toggle="collapse" data-target=".navbar-collapse">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+				    <div class="navbar-brand">
+					    <a href="index.html">
+					    	<img class="img-responsive" src="images/logo.png" alt="logo" width="200">
+					    </a> 
+				    </div>                   
+				</div><!--/ Logo end -->
+				<nav class="collapse navbar-collapse clearfix newheader" role="navigation">
+					<ul class="nav navbar-nav navbar-right ">
+						<li>
+                       		<a href="about.html"  >Sobre nós</a>
+	                    </li>
+						<li >
+                       		<a href="locals.html" >Espaços</a>
+	                    </li>
+	                    <li>
+                       		<a href="activities.html">Atividades</a>
+	                    </li>
+	                    <li class="dropdown">
+                       		<a href="modalities.html" >Modalidades</a>
+	                    </li>
+	                    <li class="dropdown">
+                       		<a href="sponsors.html">Patrocinadores</a>
+	                    </li>
+                    </ul>
+				</nav><!--/ Navigation end -->
+			</div><!--/ Row end -->
+		</div><!--/ Container end -->
+	</header><!--/ Header end -->
+
+	<!-- Slider start -->
+	<section id="home" class="no-padding">	
+
+    	<div id="main-slide" class="ts-flex-slider">
+
+			<div class="flexSlideshow flexslider">
+
+					<li>
+						<div class="overlay2">
+							<img class="" src="images/slider/bg3.jpg" alt="slider">
+						</div>
+						<div class="flex-caption slider-content">
+	                        <div class="col-md-12 text-center">
+	                            <h2 class="animated7">
+	                                Karts' N Go
+	                            </h2>
+	                            <h3 class="animated8">
+	                            	Diversão Sobre Rodas
+	                            </h3>		
+	                            <div class="">
+									<a class="animated4 btn btn-primary btn-min-block white" data-toggle="modal" data-target="#Registo" >Registo</a>
+									<a class="animated4 btn btn-primary btn-min-block white " data-toggle="modal" data-target="#Login">Login</a>
+	                            </div>     
+	                        </div>
+	                    </div>
+					</li>
+				
+			</div>
+		</div><!--/ Main slider end --> 
+		
+    </section> <!--/ Slider end -->
+    
+
+<!-- Modal Registo -->
+<div class="modal fade" id="Registo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+  
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+   <h3 class="modal-title" id="exampleModalLabel" style="color:black"> Registo</h3>
+   <form id="contact_form" name="contact_form" method="post" role="form">
+						  
+	  <div class="row">
+		  <div class="form-group col">
+				  <div class="col-md-12">								
+				  <br>
+				  <input id="nome" type="nome" name="nome_gestor_espaco" size="20" class="form-control" placeholder="Nome" required>
+			  </div>
+		  </div>	
+	  </div>    
+	   <div class="row">
+	   <div class="form-group col">
+		  <div class="col-md-12">									
+		  <br>
+	  <input id="email" type="email" name="email" size="20" class="form-control" placeholder="Email" data-rule="required|email" required>
+	  </div>
+	  </div>
+	  </div>
+  
+	  <div class="row">
+		  <div class="form-group col">
+			  <div class="col-md-12">									
+			  <br>
+			  <input id="morada" type="text" name="morada" size="30" class="form-control" placeholder="Morada" required>
+		  </div>
+		  </div>
+		  </div>
+  
+	  <div class="row">
+		  <div class="form-group col">
+				  <div class="col-md-12">	
+				  <a>Data de nascimento</a>
+					  <input id="data_nascimento" type="date" name="data_nascimento" size="8" min='1899-01-01' max='2020-13-13' class="form-control" data-rule="required|date" required>
+				  </div>
+  
+				  <script>
+				  var today = new Date();
+				  var dd = today.getDate();
+				  var mm = today.getMonth()+1; //January is 0!
+				  var yyyy = today.getFullYear();
+				   if(dd<10){
+						  dd='0'+dd
+					  } 
+					  if(mm<10){
+						  mm='0'+mm
+					  } 
+				  
+				  today = yyyy+'-'+mm+'-'+dd;
+				  document.getElementById("data_nascimento").setAttribute("max", today);
+			  </script>
+  
+			  </div>
+	  </div>
+	  
+	  <div class="row">
+			  <div class="form-group col">
+					  <div class="col-md-6">								
+					  <input id="nif" type="number" name="nif"  minlength="9" maxlength="9" class="form-control" placeholder="NIF" data-rule="required|number"  autocomplete="off" required>
+					  </div>
+			  <div class="form-group col">
+				  <div class="col-md-6">								
+				  <input id="telefone" type="number" name="telefone" minlength="9" size="20" class="form-control" placeholder="Telemóvel" data-rule="required|number" autocomplete="off" required>
+				  </div>
+			  </div>
+			  </div>
+	  </div>
+	  <div class="row">
+			  <div class="form-group col">
+					  <div class="col-md-6">								
+					  <br>
+				  <input id="password" type="password" name="password" size="20" minlength="9" class="form-control" placeholder="Password" autocomplete="off" required>
+				  </div>
+				  <div class="form-group col">
+						  <div class="col-md-6">									
+					  <br>
+				  <input id="ConfirmarPassword" type="password" name="ConfirmarPassword" size="20" placeholder="Confirmar Password" class="form-control" data-rule="required|password" required>
+				  </div>
+				  </div>
+		  </div>	
+	  </div>
+  </div>
+  <br>
+  <h3 class="modal-title" id="exampleModalLabel" style="color:black">Registo do Espaço</h3>	
+  <div class="row">
+  <div class="form-group col">
+	  <div class="col-md-12">
+		  <br>
+		  <input id="morada_espaco" type="text" name="morada" class="form-control" placeholder="Morada" required>
+		  <br>
+		  <input id="localidade" type="text" name="cidade" class="form-control" placeholder="Localidade" required>
+		  <br>
+		  <input id="coordenadas_gps" type="number" name="coordenadas_gps"  class="form-control"  data-rule="required|number" placeholder="Coordenadas GPS" required>
+		  <br>
+		  <label style = "color:black">Insira aqui uma foto da cidade do novo epaço:</label>
+		  <br>
+			  <input id="img_cidade" type="file" name="img_cidade" >
+			   
+			  <div class="_1gax"><i class="img sp_j1zq5O4duhm sx_cea6e6"></i></div>
+	  </div>
+  </div>
+  </div>	
+  
+	  <div class="modal-footer">
+		  <input id="btnRegisto"  type="submit" value="Registar" class= "btn btn-primary">
+	  </div>
+  
+  
+	  </form>
+	  </div>
+	  </div>							
+	  </div>
+	
+	
+	
+		<!-- Modal 2-->
+	<div class="modal fade bd-example-modal-lg" id="AguardarConfirm" tabindex="-5" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document" style="max-width: 400px !important;">
+				<div class="modal-content"> 
+				<div class="modal-body">
+					 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"></span>
+				  </button>
+				<form id="confirm" class="form-group row" >
+						<div class="form-group col-md-12">
+					<h4 style="color: #b90000; text-align: center;"> Registo concluído!</h4>
+					<p>Aguarde pela confirmação do administrador para poder aceder à sua página pessoal.</p>
+					<br>
+					<a href="index.html" class="btn btn-primary" data-dismiss="modal">OK</a> 
+					</div>
+					 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+ </form>
+ </div>
+  </div>
+</div>
+</div><!-- Row end -->
+
+<!-- Modal Login -->
+<div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+			</div>
+			<div class="modal-body">
+				<h3 class="modal-title" id="exampleModalLabel" style="color:black"> Login </h3>
+				<form id="formLogin" class="" action="" method="post" role="form"> 
+                        <div class="row">
+                        	<div class="form-group col">
+                        		<br>
+                        		<input id="emaillogin" type="email" name="email" size="20" class="form-control" placeholder="Introduza o seu email" data-rule="required|email" required>
+                        		<br>
+                        		<input id="passwordlogin" type="password" name="password" size="20" class="form-control" placeholder="Introduza a sua password"data-rule="required|minlength-6" autocomplete="off" required>
+                        	</div>
+                        </div>  
+                       
+                        <div class="modal-footer">
+                        	<div class="row">
+                        		<div class="col-md-6">
+                        			<p align="center" style="color: black;"> Não tens conta? </p> 
+                        			<p align ="center"> <a href="index.html" type="submit"> Regista-te </a> </p>
+                        		</div>
+                        		<div class="col-md-6">
+								<!--	<input type="submit" id= "id" value="Login" class = "btn btn-primary">-->
+									<!--<button class="btn btn-primary" data-dismiss="modal" type= "submit"  >Login</button>-->
+									<a href= "../../Front-end-gestor-espaco/Back-office/indexback.html" id="btnLogin"  type="click"  class= "btn btn-primary">Login</a>
+								
+               		 			</div>
+               		 		</div>
+               		 	</div>
+                </form> 
+			</div>
+		</div>
+	</div>
+</div>
+
+
+		<!-- Footer start -->
+	<footer id="footer" class="footer footer2">
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-md-12 col-sm-12 footer-widget">
+					<h3 class="widget-title">Galeria</h3>
+
+					<div class="img-gallery">
+						<div class="img-container">
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/1.jpg">
+								<img src="images/gallery/1.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/2.jpg">
+								<img src="images/gallery/2.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/3.jpg">
+								<img src="images/gallery/3.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/4.jpg">
+								<img src="images/gallery/4.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/5.jpg">
+								<img src="images/gallery/5.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/6.jpg">
+								<img src="images/gallery/6.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/6.jpg">
+								<img src="images/gallery/7.jpg" alt="">
+							</a>
+							<a class="thumb-holder" data-rel="prettyPhoto" href="images/gallery/6.jpg">
+								<img src="images/gallery/8.jpg" alt="">
+							</a>
+						</div>
+					</div>
+
+						
+				</div><!--/ end flickr -->
+
+
+
+
+			</div><!-- Row end -->
+		</div><!-- Container end -->
+	</footer><!-- Footer end -->
+	
+
+	<!-- Footer start -->
+	<section id="copyright" class="copyright angle">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<ul class="footer-social unstyled">
+						<li>
+							<a title="Twitter" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-twitter"></i></span>
+							</a>
+							<a title="Facebook" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-facebook"></i></span>
+							</a>
+							<a title="Google+" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-google-plus"></i></span>
+							</a>
+							<a title="linkedin" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-linkedin"></i></span>
+							</a>
+							<a title="Pinterest" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-pinterest"></i></span>
+							</a>
+							<a title="Skype" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-skype"></i></span>
+							</a>
+							<a title="Dribble" href="#">
+								<span class="icon-pentagon wow bounceIn"><i class="fa fa-dribbble"></i></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div><!--/ Row end -->
+		
+		   <div id="back-to-top" data-spy="affix" data-offset-top="10" class="back-to-top affix">
+				<button class="btn btn-primary" title="Back to Top"><i class="fa fa-angle-double-up"></i></button>
+			</div>
+		</div><!--/ Container end -->
+	</section><!--/ Footer end -->
+	<!-- Javascript Files
+	================================================== -->
+
+	<!-- initialize jQuery Library -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<!-- Bootstrap jQuery -->
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!-- Style Switcher -->
+	<script type="text/javascript" src="js/style-switcher.js"></script>
+	<!-- Owl Carousel -->
+	<script type="text/javascript" src="js/owl.carousel.js"></script>
+	<!-- PrettyPhoto -->
+	<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
+	<!-- Bxslider -->
+	<script type="text/javascript" src="js/jquery.flexslider.js"></script>
+	<!-- Owl Carousel -->
+	<script type="text/javascript" src="js/cd-hero.js"></script>
+	<!-- Isotope -->
+	<script type="text/javascript" src="js/isotope.js"></script>
+	<script type="text/javascript" src="js/ini.isotope.js"></script>
+	<!-- Wow Animation -->
+	<script type="text/javascript" src="js/wow.min.js"></script>
+	<!-- SmoothScroll -->
+	<script type="text/javascript" src="js/smoothscroll.js"></script>
+	<!-- Eeasing -->
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<!-- Counter -->
+	<script type="text/javascript" src="js/jquery.counterup.min.js"></script>
+	<!-- Waypoints -->
+	<script type="text/javascript" src="js/waypoints.min.js"></script>
+	<!-- Template custom -->
+	<script type="text/javascript" src="js/custom.js"></script>
+	
+	<script src="jquery-3.4.1.min.js"></script>
+	<!--<script type="text/javascript" src="js/registo.js"></script>-->
+	<script src="http://cdn.js.cloudflare.com/ajax/libs/libs/limontsweetalert2/7.26.9/sweetalert2.all.min.js"></script>
+
+<script src="js/registon.js"></script>
+<script src="js/login.js"></script>
+	<!-- Template custom -->
+	<script type="text/javascript" src="js/custom.js"></script>
+	</div><!-- Body inner end -->
+
+	
+	</div><!-- Body inner end -->
+</body>
+</html>
