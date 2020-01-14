@@ -25,7 +25,7 @@ function read(req, res) {
 function readInfo(req, res){
     const id_gestor_espaco = req.sanitize('email').escape();
     const post = {email_gestor: id_gestor_espaco};
-    const query = connect.con.query ('SELECT nome_gestor_espaco, morada, nif, telefone, data_nascimento,email_gestor FROM space_manager where ?', post, function(err, rows, fields){
+    const query = connect.con.query ('SELECT nome_gestor_espaco, morada, nif, telefone, data_nascimento,email_gestor,idEspacoSM_fk FROM space_manager where ?', post, function(err, rows, fields){
         console.log(query.sql);
         if (err) {
             console.log(err);
@@ -78,7 +78,7 @@ function save(req, res) {
     const errors = req.validationErrors();
 
     req.checkBody("nome_gestor_espaco", "Insira apenas texto").matches(/^[a-z ]+$/i);
-    req.checkBody('data_nascimento', "Data formato errado").isDate();
+    //req.checkBody('data_nascimento', "Data formato errado").isDate();
     req.checkBody('morada', "insira apenas texto").matches(/^[a-z ]+$/i);
     req.checkBody('nif', "insira apenas numeros").isNumeric();
     req.checkBody('telefone', "insira apenas numeros").isNumeric();
@@ -130,7 +130,7 @@ function update(req, res) {
     const email_gestor = req.sanitize('email_gestor').escape();
 
     req.checkBody("nome_gestor_espaco", "Insira apenas texto").matches(/^[a-z ]+$/i);
-    req.checkBody('data_nascimento', "Data formato errado").isDate();
+    //req.checkBody('data_nascimento', "Data formato errado").isDate();
     req.checkBody('morada', "insira apenas texto").matches(/^[a-z ]+$/i);
     req.checkBody('nif', "insira apenas numeros").isNumeric();
     req.checkBody('telefone', "insira apenas numeros").isNumeric();

@@ -11,16 +11,13 @@ const path = require('path')
 
 const jsonMessagesPath = __dirname + "/../assets/jsonMessages/";
 const jsonMessages = require(jsonMessagesPath + "login");
+router.get('/', function(req, res) {
 
-router.get('/', function(req, res) {  //rota express....
-   res.send(path.resolve(__dirname + '/../../Front-end-gestor-espaco/'))
 
-   //res.send("PW");
-   //res.end();
+var htmlPath = path.join(__dirname + "/../../Front-end-gestor-espaco", 'html');
+    res.send("PW");
+   res.end();
 });
-
-
-
 
 router.get('/spacemanager/', controllerSpaceManager.read);
 router.get('/spacemanager/inf/:email', controllerSpaceManager.readInfo);
@@ -39,14 +36,14 @@ router.get('/sponsership/:id', controllerSponserShip.readID);
 router.post('/sponsership/', controllerSponserShip.save);
 router.put('/sponsership/del/:id', controllerSponserShip.deleteLogico);
 router.put('/sponsership/:id', controllerSponserShip.update);
-router.get('/sponsershipreadAll/', controllerSponserShip.readAll);
+router.get('/sponsershipreadAll/', controllerSponserShip.readAll)
 
 
 router.get('/materials/', controllerMaterials.read);
 router.get('/materials/:id', controllerMaterials.readID);
 router.post('/materials/', controllerMaterials.save);
 router.put('/materials/del/:id_material',controllerMaterials.deleteLogico);
-router.put('/materials/:id', controllerMaterials.update);
+router.put('/materials/:id_material', controllerMaterials.update)
 
 
 router.get('/track/', controllerTrack.read);
